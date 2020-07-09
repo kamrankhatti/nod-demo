@@ -1,0 +1,141 @@
+<div class="container col-4">
+  <h2>Nod. Exercise Demo</h2>
+  <br/>
+  <form [formGroup]="form">
+    <div class="form-group">
+      <div class="row">
+        <div class="col">
+          <label for="first-name">First Name</label>
+          <nod-char-counter
+            [limit]="30"
+            class="float-right"
+            [charCount]="form.get('first_name').value">
+          </nod-char-counter>
+          <input
+            type="text"
+            id="first-name"
+            class="form-control"
+            autocomplete="off"
+            placeholder="Mitchell"
+            formControlName="first_name">
+            <span class="text-danger" *ngIf="formValidations?.first_name">Invalid First Name</span>
+        </div>
+        <div class="col">
+          <label for="last-name">Last Name</label>
+          <nod-char-counter
+            [limit]="30"
+            class="float-right"
+            [charCount]="form.get('last_name').value">
+          </nod-char-counter>
+          <input
+            type="text"
+            id="last-name"
+            class="form-control"
+            autocomplete="off"
+            placeholder="Donaldson"
+            formControlName="last_name">
+            <span class="text-danger" *ngIf="formValidations?.last_name">Invalid Last Name</span>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="row">
+        <div class="col">
+          <label for="dob">Date of Birth</label>
+          <nod-datepicker id="dob"
+                            placeholder="1999-07-15"
+                            (dateChange)="onDateChange($event)">
+          </nod-datepicker>
+            <span class="text-danger" *ngIf="formValidations?.dob">Invalid Date of Birth</span>
+        </div>
+        <div class="col">
+          <label for="email">Email
+            <span class="material-icons"
+                  [placement]="'bottom'"
+                  nodTooltip="The customers primary contact email address">help_outline</span>
+          </label>
+          <nod-char-counter
+            [limit]="40"
+            class="float-right"
+            [charCount]="form.get('email').value">
+          </nod-char-counter>
+          <input
+            type="text"
+            id="email"
+            class="form-control"
+            autocomplete="off"
+            formControlName="email"
+            placeholder="name@example.com">
+            <span class="text-danger" *ngIf="formValidations?.email">Invalid Email Address</span>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="address">Address
+        <span class="material-icons"
+              [placement]="'bottom'"
+              nodTooltip="The customers current residential address">help_outline</span>
+      </label>
+      <nod-char-counter
+        [limit]="100"
+        class="float-right"
+        [charCount]="form.get('address').value">
+      </nod-char-counter>
+      <input type="text"
+             id="address"
+             class="form-control"
+             autocomplete="off"
+             formControlName="address"
+             placeholder="3 Doris St, North Sydney, NSW 2060">
+        <span class="text-danger" *ngIf="formValidations?.address">Invalid Address</span>
+    </div>
+    <div class="form-group">
+      <div class="row">
+        <div class="col">
+          <label for="phone">Contact Number</label>
+          <nod-char-counter
+            [limit]="10"
+            class="float-right"
+            [charCount]="form.get('phone').value">
+          </nod-char-counter>
+          <input type="text"
+                 id="phone"
+                 autocomplete="off"
+                 class="form-control"
+                 formControlName="phone"
+                 placeholder="0123456789">
+            <span class="text-danger" *ngIf="formValidations?.phone">Invalid Contact Number</span>
+        </div>
+        <div class="col">
+          <label for="gender">Gender</label>
+          <select class="form-control" id="gender" formControlName="gender">
+            <option *ngFor="let gender of genderOptions" value="{{ gender.value }}">{{ gender.label }}</option>
+          </select>
+            <span class="text-danger" *ngIf="formValidations?.gender">Gender is a required field</span>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="recommendations">Areas of Recommendation
+        <span class="material-icons"
+              [placement]="'bottom'"
+              nodTooltip="Select all of the areas that you are providing a recommendation for">help_outline</span>
+      </label>
+      <select multiple class="form-control" id="recommendations" formControlName="recommendation">
+        <option *ngFor="let recom of recommendationOptions" value="{{ recom.value}}"> {{ recom.label }}</option>
+      </select>
+        <span class="text-danger" *ngIf="formValidations?.recommendations">Areas of Recommendation is a required field</span>
+    </div>
+  </form>
+
+  <!--
+    Ideally dropdown and multi-select should also have a shared
+    component due to limit time I am only making buttons as a shared
+    component, which could be used globally in the app whenever we need
+    button we could use nod-button component which is dynamic and accepts
+    properties and emit actions -->
+  <div class="form-group">
+    <nod-button [props]="buttonProperties"
+                (buttonClick)="onSubmit()"></nod-button>
+  </div>
+</div>

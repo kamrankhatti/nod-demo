@@ -1,0 +1,6 @@
+<button type="button"
+        (click)="onClick($event)"
+        [disabled]="props.disabled"
+        [ngClass]="['btn btn-' + props.class]">
+  {{ props.text }}
+</button>
