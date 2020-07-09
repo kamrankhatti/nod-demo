@@ -5,7 +5,8 @@ import { NgModule } from '@angular/core';
 import {
   NodButtonComponent,
   NodDatepickerComponent,
-  NodCharCounterComponent
+  NodCharCounterComponent,
+  NodProgressBarComponent
 } from "./components";
 
 // directives
@@ -17,6 +18,7 @@ import { TooltipDirective } from '../shared/directives';
     NodButtonComponent,
     NodDatepickerComponent,
     NodCharCounterComponent,
+    NodProgressBarComponent,
   ],
   imports: [CommonModule],
   providers: [],
@@ -24,7 +26,8 @@ import { TooltipDirective } from '../shared/directives';
     TooltipDirective,
     NodButtonComponent,
     NodDatepickerComponent,
-    NodCharCounterComponent
+    NodCharCounterComponent,
+    NodProgressBarComponent
   ],
   bootstrap: []
 })

@@ -3,7 +3,7 @@ import { FormGroup } from '@angular/forms';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 
-import { HomeModel } from '../../model/home.model';
+import { HomeModel, IData } from '../../model/home.model';
 import { INodButtonProps } from '../../../shared/components';
 import { genderOptions, HomeUtils, IOptions, recommendationOptions } from '../../utils/home.utils';
 
@@ -21,6 +21,7 @@ export class FormComponent implements OnInit, OnDestroy {
     text: 'Generate CSV'
   }
   formValidations;
+  progressBar: number;
   // destroy subject
   destroy$ = new Subject<null>();
   // setting form from model
@@ -53,7 +54,7 @@ export class FormComponent implements OnInit, OnDestroy {
      * and set each field status valid or invalid once user touches the field
      * (field is dirty if user touches default no errors shown)
     */
-    this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(() => {
+    this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe((formData: IData) => {
       this.buttonProperties = { ...this.buttonProperties, disabled: this.form.invalid };
       this.formValidations = {
         first_name: this.form.get('first_name').dirty && this.form.get('first_name').invalid,
@@ -65,6 +66,8 @@ export class FormComponent implements OnInit, OnDestroy {
         gender: this.form.get('gender').dirty && this.form.get('gender').invalid,
         recommendation: this.form.get('recommendation').dirty && this.form.get('recommendation').invalid
       }
+
+      this.progressBar = HomeUtils.calculateProgressPercentage(formData, this.formValidations)
     });
   }
 

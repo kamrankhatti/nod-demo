@@ -63,4 +63,20 @@ export class HomeUtils {
 
     createSpreadSheet(data, columns, filename)
   }
+
+  /**
+   * calculate progress bar percentage depends on each field
+   * has a valid value and calculate total percentage and return.
+   */
+  static calculateProgressPercentage(formData: IData, fieldValidations) {
+    let progressPercent = 0;
+    Object.entries((formData)).map(([key, value]) => {
+      // if form field has value and not validation error then add progress percentage
+      if (value && !fieldValidations[key]) {
+        progressPercent = progressPercent + 12.5
+      }
+    })
+
+    return progressPercent
+  }
 }
